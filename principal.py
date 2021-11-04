@@ -2,10 +2,6 @@
 from os import sep
 from libreria import mostrarTabla, obtenerCSV
 
-import pandas as pd
-
-
-
 
 print("OBJETIVO 1")
 print("*************************************************************")
