@@ -14,10 +14,13 @@ obtenerCSV('https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI
 
 obtenerCSV('https://es.finance.yahoo.com/world-indices/','W(100%)','archivo2','class')
 
-
+    
 print('ACCIONES DE LA BOLSA DE MADRID')
 print('------------------------------------------------------------------------------------------------')
 mostrarTabla('archivo.csv')
+print()
+print()
+
 
 print('ACCIONES DE LA BOLSA DE finance yahoo')
 print('------------------------------------------------------------------------------------------------')
