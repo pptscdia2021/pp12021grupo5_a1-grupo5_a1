@@ -3,7 +3,6 @@ from os import sep
 from libreria import  obtenerCSV
 
 import pandas as pd
-import numpy as np
 
 
 print("OBJETIVO 1")
@@ -38,13 +37,7 @@ print("*************************************************************")
 
 datos["% Dif."]=pd.to_numeric(datos["% Dif."].str.replace(',', '.'))
 
-
-print(datos["% Dif."].min().__index__)
-
-
 dfordenado=datos.sort_values(by="% Dif.", ascending=False)
-
-
 
 print("Las 2 cotizaciones de mayor ganancia son: ")
 print(dfordenado.head(2)["Nombre"],dfordenado.head(2)["% Dif."])
