@@ -40,18 +40,10 @@ datos["% Dif."]=pd.to_numeric(datos["% Dif."].str.replace(',', '.'))
 dfordenado=datos.sort_values(by="% Dif.", ascending=False)
 
 print("Las 2 cotizaciones de mayor ganancia son: ")
-print(dfordenado.head(2)["Nombre"],dfordenado.head(2)["% Dif."])
+print(dfordenado.head(2)[["Nombre","% Dif."]])
 print()
 print("Las 2 cotizaciones de menor ganancia son: ")
-print(dfordenado.tail(2)["Nombre"],dfordenado.tail(2)["% Dif."])
-
-
-
-
-
-
-
-#mostrarTabla('archivo2.csv')
+print(dfordenado.tail(2)[["Nombre","% Dif."]])
 
 
 
