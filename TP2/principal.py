@@ -66,11 +66,25 @@ while not salir:
         dfordenado=datos.sort_values(by="% Dif.", ascending=False)
         print("Las 2 cotizaciones de mayor perdida son: ")
         print(dfordenado.tail(2)[["Nombre","% Dif."]])
-    elif opcion == 7:
+    #elif opcion==7:
+        
+       # datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
+       # acionesbolsaMadrid=datos[datos.Nombre.isin(['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER'])]
+       # print(acionesbolsaMadrid)
+    #elif opcion==8:
+            
+     #   datos=pd.read_csv('yahoo.csv', header=0, encoding = "ISO-8859-1")
+     #   acionesbolsaMadrid=datos[datos.Nombre.isin(['REP.MC','TEF','BBVA','MAP.MC','SAN'])]
+     #   print(acionesbolsaMadrid)
+    elif opcion == 10:
         salir=True
     else:
         print ("Introduce un numero correcto")
 
+
+
+    
+        
     print("")
     print("")
     print("")
