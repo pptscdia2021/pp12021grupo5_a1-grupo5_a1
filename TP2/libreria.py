@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 import pandas as pd
-
+import yfinance as yf
+from datetime import datetime,timedelta
+import matplotlib.pyplot as plt
 
 def obtenerCSV(url, id, nombreArchivo, tipo):
     # indicar la ruta
@@ -36,8 +38,57 @@ def mostrarTabla(nombreArchivo):
     print(datos)
 
 
+def obtenerCotizacionesYahoo(acciones, accionesbolsamadrid):
+    lista=list()
+    #ahora = datetime.now()
+    #ayer = ahora - timedelta(days=1)
+    #for accion in acciones:
+    #    df=yf.download(accion, period="1d")
+    #    print(df)
+
+    #with open('yahoocomp'+ '.csv','w', newline='') as csv_file:
+    #    writer = csv.writer(csv_file)
+            # lista.append('Nombre')
+       # lista.append('Cierre')
+       # writer.writerow(lista)   
+    #for accion in acciones:
+    for indice in range(0, len(acciones)):
+        df=yf.download(acciones[indice],group_by='ticker', period="1d")
+        df['Nombre']=accionesbolsamadrid[indice]
+        lista.append(df)
+    
+    dff=pd.concat(lista)
+    dff.to_csv('yahoocomp.csv')
+    
 
 
+    
+        #df=yf.download(accion, start=ayer, end=ahora,group_by="ticker")
+        
+
+    #yf.ticker(accion)
+    #df=yf.download("EURUSD=X", start=datetime.now().strftime('%Y-%m-%d'), end=datetime.now().strftime('%Y-%m-%d'),group_by="ticker")
+    #return lista
+
+
+def obtenerCotizacionEuro():
+    dol=yf.Ticker("EURUSD=X")
+    #df=yf.download("EURUSD=X", start="2021-09-03", end="2021-09-04",group_by="ticker")
+    return dol.info['ask']
+
+def tablaComparacion(bolsaMadrid, bolsaYahoo):
+    bolsaMadrid=bolsaMadrid.loc[:,['Nombre','Valor']].sort_values(by='Nombre').reset_index(drop=True)
+    bolsaYahoo=bolsaYahoo.loc[:,['Nombre','Close']].sort_values(by='Nombre').reset_index(drop=True)
+    df=pd.concat([bolsaMadrid,bolsaYahoo['Close']],axis=1)
+
+    df=df.rename(columns={'Valor':'Bolsa Madrid','Close':'Yahoo Finance'})
+    return df
+
+def graficar(datafram,ejeX,tituloGrafico,nombre):
+    plt.style.use('seaborn')
+    datafram.set_index(ejeX).plot.bar(rot=0, title=tituloGrafico, figsize=(5,5), fontsize=12)
+    plt.savefig(nombre, bbox_inches='tight')
+    plt.tight_layout();plt.show()
 
 
 

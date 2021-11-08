@@ -1,6 +1,7 @@
 
 from os import sep
-from libreria import  obtenerCSV
+
+from libreria import  obtenerCSV,obtenerCotizacionEuro,obtenerCotizacionesYahoo,tablaComparacion,graficar
 
 import pandas as pd
 
@@ -13,78 +14,103 @@ def ingresarOpcion():
         correcto=True
     return num
 
+if __name__ == "__main__":
+    salir=False
+    opcion=0
+    print("")
+    while not salir:
+        print("OPCIONES")
+        print("Para los puntos 3,4,5,6 se debe ejecutar primero el 1")
+        print("Objetivo 1")
+        print("1. Obtener datos de acciones de Bolsa de España y guardarlo en un archivo csv llamado bolsaMadrid.csv")
+        print("2. Obtener datos de acciones de Yahoo Finance y guardarlo en un archivo csv llamado yahoo.csv")
+        print("3. Mostrar datos de Bolsa de España en forma de Tabla")
+        print("4. Mostrar datos de Yahoo Finance en forma de Tabla")
+        print("Objetivo 2")
+        print("5. Identificar 2 cotizaciones de mayor ganancia")
+        print("6. Identificar 2 cotizaciones de mayor perdida")
+        print("Objetivo 3")
+        print("7. Comparativa de precios de cotización entre los dos orígenes de datos")
 
-salir=False
-opcion=0
-print("")
-while not salir:
-    print("OPCIONES")
-    print("Para los puntos 3,4,5,6 se debe ejecutar primero el 1")
-    print("Objetivo 1")
-    print("1. Obtener datos de acciones de Bolsa de España y guardarlo en un archivo csv llamado bolsaMadrid.csv")
-    print("2. Obtener datos de acciones de Yahoo Finance y guardarlo en un archivo csv llamado yahoo.csv")
-    print("3. Mostrar datos de Bolsa de España en forma de Tabla")
-    print("4. Mostrar datos de Yahoo Finance en forma de Tabla")
-    print("Objetivo 2")
-    print("5. Identificar 2 cotizaciones de mayor ganancia")
-    print("6. Identificar 2 cotizaciones de mayor perdida")
-    print("7. Salir")
-    
- 
-    opcion = ingresarOpcion()
- 
-
-
-    print()
-    print()
-    if opcion == 1:
-        obtenerCSV('https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000','ctl00_Contenido_tblAcciones','bolsaMadrid','id')
-        print("Archivo creado exitosamente!")        
-    elif opcion == 2:
-        obtenerCSV('https://es.finance.yahoo.com/world-indices/','W(100%)','yahoo','class')
-        print("Archivo creado exitosamente!")        
-    elif opcion == 3:
-        print('ACCIONES DE LA BOLSA DE MADRID')
-        print('------------------------------------------------------------------------------------------------')
-        datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
-        datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
-        print(datos)
-    elif opcion == 4:
-        print('ACCIONES DE LA BOLSA DE YAHOO FINANCE')
-        print('------------------------------------------------------------------------------------------------')
-        datos2=pd.read_csv('yahoo.csv', header=0, encoding = "ISO-8859-1")
-        print(datos2)
-    elif opcion==5:
-        datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
-        datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
-        dfordenado=datos.sort_values(by="% Dif.", ascending=False)
-        print("Las 2 cotizaciones de mayor ganancia son: ")
-        print(dfordenado.head(2)[["Nombre","% Dif."]])
-    elif opcion==6:
-        datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
-        datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
-        dfordenado=datos.sort_values(by="% Dif.", ascending=False)
-        print("Las 2 cotizaciones de mayor perdida son: ")
-        print(dfordenado.tail(2)[["Nombre","% Dif."]])
-    #elif opcion==7:
+        print("10. Salir")
         
-       # datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
-       # acionesbolsaMadrid=datos[datos.Nombre.isin(['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER'])]
-       # print(acionesbolsaMadrid)
-    #elif opcion==8:
+    
+        opcion = ingresarOpcion()
+    
+
+
+        print()
+        print()
+        if opcion == 1:
+            obtenerCSV('https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000','ctl00_Contenido_tblAcciones','bolsaMadrid','id')
+            print("Archivo creado exitosamente!")        
+        elif opcion == 2:
+            obtenerCSV('https://es.finance.yahoo.com/world-indices/','W(100%)','yahoo','class')
+            print("Archivo creado exitosamente!")        
+        elif opcion == 3:
+            print('ACCIONES DE LA BOLSA DE MADRID')
+            print('------------------------------------------------------------------------------------------------')
+            datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
+            datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
+            print(datos)
+        elif opcion == 4:
+            print('ACCIONES DE LA BOLSA DE YAHOO FINANCE')
+            print('------------------------------------------------------------------------------------------------')
+            datos2=pd.read_csv('yahoo.csv', header=0, encoding = "ISO-8859-1")
+            print(datos2)
+        elif opcion==5:
+            datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
+            datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
+            dfordenado=datos.sort_values(by="% Dif.", ascending=False)
+            print("Las 2 cotizaciones de mayor ganancia son: ")
+            print(dfordenado.head(2)[["Nombre","% Dif."]])
+        elif opcion==6:
+            datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
+            datos["% Dif."]=datos["% Dif."].str.replace(',', '.').astype(float)
+            dfordenado=datos.sort_values(by="% Dif.", ascending=False)
+            print("Las 2 cotizaciones de mayor perdida son: ")
+            print(dfordenado.tail(2)[["Nombre","% Dif."]])
+        elif opcion==7:
+            accionesMadrid=['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER']
+            accionesyahoo=['REP.MC','TEF','BBVA','MAP.MC','SAN']
             
-     #   datos=pd.read_csv('yahoo.csv', header=0, encoding = "ISO-8859-1")
-     #   acionesbolsaMadrid=datos[datos.Nombre.isin(['REP.MC','TEF','BBVA','MAP.MC','SAN'])]
-     #   print(acionesbolsaMadrid)
-    elif opcion == 10:
-        salir=True
-    else:
-        print ("Introduce un numero correcto")
+            print()
+            obtenerCotizacionesYahoo(accionesyahoo,accionesMadrid)
+            print("Acciones Yahoo")
+            print("--------------------------")
+            yahoo=pd.read_csv('yahoocomp.csv', header=0, encoding = "ISO-8859-1").sort_values(by='Nombre')
+            #yahoo=yahoo.rename(columns={'Close':'Valor'})
+            print(yahoo[['Nombre','Close']])
+            print()
+            datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1").sort_values(by='Nombre')
+            datos["Últ."]=datos["Últ."].str.replace(',', '.').astype(float)
+            dolar=obtenerCotizacionEuro()
+            datos["Últ."]=datos["Últ."]*dolar
+            datos=datos.rename(columns={'Últ.':'Valor'})
+            accionesbolsaMadrid=datos[datos.Nombre.isin(accionesMadrid)]
+            print("Valor Euro:" + str(dolar))
+            print()
+            print("Acciones Bolsa de Madrid")
+            print("--------------------------")
+            print(accionesbolsaMadrid[['Nombre','Valor']])
+            print()
+            print("Tabla Comparativa en Dolares")
+            print("--------------------------")
+            print(tablaComparacion(accionesbolsaMadrid,yahoo))
+
+        elif opcion==8:
+            graficar(tablaComparacion(accionesbolsaMadrid,yahoo),'Nombre','Comparación 5 acciones','grafico.png')
+
+        
+        elif opcion == 10:
+            salir=True
+        else:
+            print ("Introduce un numero correcto")
 
 
 
     
         
-    print("")
-    print("")
-    print("")
+        print("")
+        print("")
+        print("")
