@@ -6,15 +6,18 @@ import pandas as pd
 class CSV:
     
 
-    def __init__(self, url):
+    def __init__(self, url,tipo,id):
         self.url_page=url
+        self.tipo=tipo
+        self.id=id
+
 
     
-    def obtenerCSV(self,tipo, id,nombreArchivo):
+    def obtenerCSV(self,nombreArchivo):
         page = requests.get(self.url_page).text 
         soup = BeautifulSoup(page, 'html.parser')
 
-        tabla = soup.find('table', attrs={tipo: id})
+        tabla = soup.find('table', attrs={self.tipo: self.id})
         with open(nombreArchivo+ '.csv','w', newline='') as csv_file:
             writer = csv.writer(csv_file)
             lista=[]
@@ -28,3 +31,6 @@ class CSV:
                     #print(celda.text)
                 if(len(lista)!=0):
                     writer.writerow(lista)  
+
+    def abrirCSV(self,nombreArchivo):
+        return pd.read_csv(nombreArchivo + '.csv', header=0, encoding = "ISO-8859-1")
