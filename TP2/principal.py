@@ -31,7 +31,8 @@ if __name__ == "__main__":
         print("6. Identificar 2 cotizaciones de mayor perdida")
         print("Objetivo 3")
         print("7. Comparativa de precios de cotización entre los dos orígenes de datos")
-
+        print("Objetivo 4")
+        print("8. Grafico -Comparativa de precios de cotización entre los dos orígenes de datos")
         print("10. Salir")
         
     
