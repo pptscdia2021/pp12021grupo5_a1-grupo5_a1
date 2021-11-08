@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 import pandas as pd
-
+import yfinance as yf
+from datetime import datetime,timedelta
 
 def obtenerCSV(url, id, nombreArchivo, tipo):
     # indicar la ruta
@@ -34,6 +35,45 @@ def mostrarTabla(nombreArchivo):
        # df=pd.read_csv(nombreArchivo, sep="\t", encoding = "ISO-8859-1")
     datos=pd.read_csv(nombreArchivo, header=0, encoding = "ISO-8859-1")
     print(datos)
+
+
+def obtenerCotizacionesYahoo(acciones, accionesbolsamadrid):
+    lista=list()
+    #ahora = datetime.now()
+    #ayer = ahora - timedelta(days=1)
+    #for accion in acciones:
+    #    df=yf.download(accion, period="1d")
+    #    print(df)
+
+    #with open('yahoocomp'+ '.csv','w', newline='') as csv_file:
+    #    writer = csv.writer(csv_file)
+            # lista.append('Nombre')
+       # lista.append('Cierre')
+       # writer.writerow(lista)   
+    #for accion in acciones:
+    for indice in range(0, len(acciones)):
+        df=yf.download(acciones[indice],group_by='ticker', period="1d")
+        df['Accion']=accionesbolsamadrid[indice]
+        lista.append(df)
+    
+    dff=pd.concat(lista)
+    dff.to_csv('yahoocomp.csv')
+    
+
+
+    
+        #df=yf.download(accion, start=ayer, end=ahora,group_by="ticker")
+        
+
+    #yf.ticker(accion)
+    #df=yf.download("EURUSD=X", start=datetime.now().strftime('%Y-%m-%d'), end=datetime.now().strftime('%Y-%m-%d'),group_by="ticker")
+    #return lista
+
+
+def obtenerCotizacionEuro():
+    dol=yf.Ticker("EURUSD=X")
+    #df=yf.download("EURUSD=X", start="2021-09-03", end="2021-09-04",group_by="ticker")
+    return dol.info['ask']
 
 
 

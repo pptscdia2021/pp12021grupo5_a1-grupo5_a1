@@ -1,6 +1,6 @@
 
 from os import sep
-from libreria import  obtenerCSV
+from libreria import  obtenerCSV,obtenerCotizacionEuro,obtenerCotizacionesYahoo
 
 import pandas as pd
 
@@ -66,16 +66,35 @@ while not salir:
         dfordenado=datos.sort_values(by="% Dif.", ascending=False)
         print("Las 2 cotizaciones de mayor perdida son: ")
         print(dfordenado.tail(2)[["Nombre","% Dif."]])
-    #elif opcion==7:
+    elif opcion==7:
+        accionesMadrid=['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER']
+        accionesyahoo=['REP.MC','TEF','BBVA','MAP.MC','SAN']
         
-       # datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
-       # acionesbolsaMadrid=datos[datos.Nombre.isin(['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER'])]
-       # print(acionesbolsaMadrid)
-    #elif opcion==8:
-            
-     #   datos=pd.read_csv('yahoo.csv', header=0, encoding = "ISO-8859-1")
-     #   acionesbolsaMadrid=datos[datos.Nombre.isin(['REP.MC','TEF','BBVA','MAP.MC','SAN'])]
-     #   print(acionesbolsaMadrid)
+        print()
+        obtenerCotizacionesYahoo(accionesyahoo,accionesMadrid)
+        print("Acciones Yahoo")
+        print("--------------------------")
+        datos2=pd.read_csv('yahoocomp.csv', header=0, encoding = "ISO-8859-1")
+        print(datos2[['Accion','Close']])
+        print()
+
+
+
+        datos=pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
+        datos["Últ."]=datos["Últ."].str.replace(',', '.').astype(float)
+        dolar=obtenerCotizacionEuro()
+        datos["Últ."]=datos["Últ."]*dolar
+        accionesbolsaMadrid=datos[datos.Nombre.isin(accionesMadrid)]
+        print("Valor Euro:" + str(dolar))
+        print()
+        print("Acciones Bolsa de Madrid")
+        print("--------------------------")
+        print(accionesbolsaMadrid[['Nombre','Últ.']])
+  
+        
+
+
+    
     elif opcion == 10:
         salir=True
     else:
