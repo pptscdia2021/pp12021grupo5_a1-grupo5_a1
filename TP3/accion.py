@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class acciones:
+class accion:
     def obtenerCotizacionesMayorGanancia(dataframe, cantidad):
         dataframe["% Dif."]=dataframe["% Dif."].str.replace(',', '.').astype(float)
         dfordenado=dataframe.sort_values(by="% Dif.", ascending=False)
