@@ -33,17 +33,27 @@ while not salir:
 
 
 
-    bolsaMadrid=CSV('https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000')
-    yahoo=CSV('https://es.finance.yahoo.com/world-indices/')
+    bolsaMadrid=CSV('https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000','id','ctl00_Contenido_tblAcciones')
+    yahoo=CSV('https://es.finance.yahoo.com/world-indices/','class','W(100%)')
 
     print()
     print()
     if opcion == 1:
-        bolsaMadrid.obtenerCSV('id','ctl00_Contenido_tblAcciones','bolsaMadrid')
+        bolsaMadrid.obtenerCSV('bolsaMadrid')
         print("Archivo creado exitosamente!")  
     elif opcion==2:
-        yahoo.obtenerCSV('class','W(100%)','yahoo')
+        yahoo.obtenerCSV('yahoo')
         print("Archivo creado exitosamente!")  
+    elif opcion==3:
+        print('ACCIONES DE LA BOLSA DE MADRID')
+        print('------------------------------------------------------------------------------------------------')
+        datos=bolsaMadrid.abrirCSV('bolsaMadrid')
+        print(datos)
+    elif opcion==4:
+        print('ACCIONES DE LA BOLSA DE YAHOO FINANCE')
+        print('------------------------------------------------------------------------------------------------')
+        datos2=yahoo.abrirCSV('yahoo')
+        print(datos2)
 
 
 
