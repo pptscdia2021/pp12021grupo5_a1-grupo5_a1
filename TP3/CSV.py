@@ -33,4 +33,4 @@ class CSV:
                     writer.writerow(lista)  
 
     def abrirCSV(self,nombreArchivo):
-        return pd.read_csv(nombreArchivo + '.csv', header=0, encoding = "ISO-8859-1")
+        return pd.read_csv(nombreArchivo + '.csv', header=0, encoding = "ISO-8859-1").sort_values(by='Nombre')
