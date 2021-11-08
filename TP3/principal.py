@@ -1,5 +1,5 @@
 from CSV import CSV
-from acciones import acciones
+from accion import accion
 from cotizacion import cotizacion
 
 def ingresarOpcion():
@@ -60,17 +60,17 @@ if __name__ == "__main__":
         elif opcion==5:
             datos=bolsaMadrid.abrirCSV('bolsaMadrid')#pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
             print("Las 2 cotizaciones de mayor ganancia son: ")
-            print(acciones.obtenerCotizacionesMayorGanancia(datos,2))
+            print(accion.obtenerCotizacionesMayorGanancia(datos,2))
         elif opcion==6:
             datos=bolsaMadrid.abrirCSV('bolsaMadrid')#pd.read_csv('bolsaMadrid.csv', header=0, encoding = "ISO-8859-1")
             print("Las 2 cotizaciones de mayor perdida son: ")
-            print(acciones.obtenerCotizacionesMayorPerdida(datos,2))
+            print(accion.obtenerCotizacionesMayorPerdida(datos,2))
         elif opcion==7:
             accionesMadrid=['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER']
             accionesyahoo=['REP.MC','TEF','BBVA','MAP.MC','SAN']
             
             print()
-            acciones.obtenerCotizacionesYahoo(accionesyahoo,accionesMadrid)   #Genera el archivo yahoocomp
+            accion.obtenerCotizacionesYahoo(accionesyahoo,accionesMadrid)   #Genera el archivo yahoocomp
             print("Yahoo Finance")
             print("--------------------------")
             yahoo=yahoo.abrirCSV('yahoocomp')
@@ -90,7 +90,7 @@ if __name__ == "__main__":
             print()
             print("Tabla Comparativa en Dolares")
             print("--------------------------")
-            dfcomp=acciones.tablaComparacion(accionesbolsaMadrid,yahoo)
+            dfcomp=accion.tablaComparacion(accionesbolsaMadrid,yahoo)
             print(dfcomp)
         elif opcion==8:
             print("Tabla Comparativa en Dolares")
@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
             print(dfcomp)
             
-            acciones.graficar(dfcomp,'Nombre','Comparación 5 acciones','grafico.png')
+            accion.graficar(dfcomp,'Nombre','Comparación 5 acciones','grafico.png')
 
         
         elif opcion == 10:
