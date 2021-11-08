@@ -4,6 +4,7 @@ import csv
 import pandas as pd
 import yfinance as yf
 from datetime import datetime,timedelta
+import matplotlib.pyplot as plt
 
 def obtenerCSV(url, id, nombreArchivo, tipo):
     # indicar la ruta
@@ -53,7 +54,7 @@ def obtenerCotizacionesYahoo(acciones, accionesbolsamadrid):
     #for accion in acciones:
     for indice in range(0, len(acciones)):
         df=yf.download(acciones[indice],group_by='ticker', period="1d")
-        df['Accion']=accionesbolsamadrid[indice]
+        df['Nombre']=accionesbolsamadrid[indice]
         lista.append(df)
     
     dff=pd.concat(lista)
@@ -75,9 +76,19 @@ def obtenerCotizacionEuro():
     #df=yf.download("EURUSD=X", start="2021-09-03", end="2021-09-04",group_by="ticker")
     return dol.info['ask']
 
+def tablaComparacion(bolsaMadrid, bolsaYahoo):
+    bolsaMadrid=bolsaMadrid.loc[:,['Nombre','Valor']].sort_values(by='Nombre').reset_index(drop=True)
+    bolsaYahoo=bolsaYahoo.loc[:,['Nombre','Close']].sort_values(by='Nombre').reset_index(drop=True)
+    df=pd.concat([bolsaMadrid,bolsaYahoo['Close']],axis=1)
 
+    df=df.rename(columns={'Valor':'Bolsa Madrid','Close':'Yahoo Finance'})
+    return df
 
-
+def graficar(datafram,ejeX,tituloGrafico,nombre):
+    plt.style.use('seaborn')
+    datafram.set_index(ejeX).plot.bar(rot=0, title=tituloGrafico, figsize=(5,5), fontsize=12)
+    plt.savefig(nombre, bbox_inches='tight')
+    plt.tight_layout();plt.show()
 
 
 
