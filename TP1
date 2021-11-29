@@ -1,0 +1,26 @@
+def suma(a,b):
+    print(a+b)
+
+def resta(a,b):
+    print(a-b)
+
+def prod(a,b):
+    print(a*b)
+
+def division(a,b):
+    print(a/b)
+
+def potencia(a,b):
+    print(a**b)
+
+if __name__ == "__main__":
+
+    prod(2,6)
+    
+    resta(75,25)
+
+    division(100,50)
+
+    potencia(30,3)
+
+    suma(13,25)
