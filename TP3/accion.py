@@ -2,6 +2,8 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from cotizacion import cotizacion
+
 class accion:
     def obtenerCotizacionesMayorGanancia(dataframe, cantidad):
         dataframe["% Dif."]=dataframe["% Dif."].str.replace(',', '.').astype(float)
@@ -38,3 +40,38 @@ class accion:
         datafram.set_index(ejeX).plot.bar(rot=0, title=tituloGrafico, figsize=(5,5), fontsize=12)
         plt.savefig(nombreArchivo, bbox_inches='tight')
         plt.tight_layout();plt.show()
+    
+    def comprarativaPrecios(yahoo,bolsaMadrid,grafico):
+        accionesMadrid=['REPSOL','TELEFONICA','BBVA','MAPFRE','B.SANTANDER']
+        accionesyahoo=['REP.MC','TEF','BBVA','MAP.MC','SAN']
+    
+        print()
+        accion.obtenerCotizacionesYahoo(accionesyahoo,accionesMadrid)   #Genera el archivo yahoocomp
+        yahoo=yahoo.abrirCSV('yahoocomp')
+        if(grafico==False):
+            print("Yahoo Finance")
+            print("--------------------------")
+            print(yahoo[['Nombre','Close']])
+            print()
+        datos=bolsaMadrid.abrirCSV('bolsaMadrid')
+        datos["Últ."]=datos["Últ."].str.replace(',', '.').astype(float)
+        dolar=cotizacion.obtenerCotizacion("EURUSD=X")
+        datos["Últ."]=datos["Últ."]*dolar
+        datos=datos.rename(columns={'Últ.':'Valor'})
+        accionesbolsaMadrid=datos[datos.Nombre.isin(accionesMadrid)]
+        dfcomp=accion.tablaComparacion(accionesbolsaMadrid,yahoo)
+        if(grafico==False):
+            print("Valor Euro:" + str(dolar))
+            print()
+            print("Acciones Bolsa de Madrid")
+            print("--------------------------")
+            print(accionesbolsaMadrid[['Nombre','Valor']])
+            print()
+            print("Tabla Comparativa en Dolares")
+            print("--------------------------")
+            print(dfcomp)
+        else:
+            print("Tabla Comparativa en Dolares")
+            print("--------------------------")
+            print(dfcomp)
+            accion.graficar(dfcomp,'Nombre','Comparación 5 acciones','grafico.png')
