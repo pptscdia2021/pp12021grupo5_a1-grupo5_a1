@@ -7,8 +7,9 @@ def presioneTecla():
     input()
     os.system("cls")
 
-def ingresarFecha():
+def ingresarFecha(tipo):
     try:
+        print("Fecha " + tipo +": ")
         dia=int(input("Ingresar Dia: "))
         mes=int(input("Ingresar Mes: "))
         año=int(input("Ingresar Año: "))

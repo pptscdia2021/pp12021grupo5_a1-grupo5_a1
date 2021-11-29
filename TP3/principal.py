@@ -32,7 +32,6 @@ if __name__ == "__main__":
     os.system("cls")
     while not salir:
         print("OPCIONES")
-        print("Para los puntos 3,4,5,6 se debe ejecutar primero el 1")
         print("Objetivo 1")
         print("1. Obtener datos de acciones de Bolsa de España y guardarlo en un archivo csv llamado bolsaMadrid.csv")
         print("2. Obtener datos de acciones de Yahoo Finance y guardarlo en un archivo csv llamado yahoo.csv")
@@ -118,7 +117,7 @@ if __name__ == "__main__":
             DepartamentoBD.agregarDepartamento(d)
             print("Departamento Ingresado con exito")
         elif opcion==13:
-            e=Empleado(0,ingresarFecha(),input("Ingrese Nombre: "),input("Ingrese Apellido: "),input("Ingrese Genero: "),ingresarFecha())
+            e=Empleado(0,input("Ingrese Nombre: "),input("Ingrese Apellido: "),ingresarFecha('Nacimiento'),input("Ingrese Genero: "),ingresarFecha('Contratacion'))
             EmpleadoBD.agregarEmpleado(e)
             print("Empleado Ingresado con exito")
         elif opcion==14:
