@@ -1,6 +1,11 @@
 import os
 from pandas.core.frame import DataFrame
 from CSV import CSV
+from Entidades.departamento import Departamento
+from Entidades.empleado import Empleado
+from funciones import ingresarFecha
+from departamentodb import DepartamentoBD
+from empleadodb import EmpleadoBD
 from funciones import presioneTecla
 from accion import accion
 
@@ -38,7 +43,12 @@ if __name__ == "__main__":
         print("7. Comparativa de precios de cotización entre los dos orígenes de datos")
         print("Objetivo 4")
         print("8. Grafico -Comparativa de precios de cotización entre los dos orígenes de datos")
-        print("10. Salir")
+        print("Base De Datos")
+        print("9. Obtener datos completos de los empleados")
+        print("10. Obtener datos completos de los departamentos")
+        print("11. Cantidad de Empleados de un genero determinado")
+        print("12. Insertar Departamentos")
+        print("15. Salir")
         
     
         opcion = ingresarOpcion()
@@ -84,8 +94,28 @@ if __name__ == "__main__":
             
         elif opcion==8:
             accion.comprarativaPrecios(yahoo,bolsaMadrid,True)
-            
-        elif opcion == 10:
+        elif opcion==9:
+            print("EMPLEADOS")
+            for item in EmpleadoBD.obtenerEmpleados():
+                print(item)
+        elif opcion==10:
+            print("DEPARTAMENTOS")
+            for item in DepartamentoBD.obtenerDepartamentos():
+                print(item)
+        elif opcion==11:
+            g='A'
+            while(g.upper()!='F' and g.upper()!='M'):
+                g=input('(M)Masculino, (F) Femenino : ')
+            print("Cantidad: " + str(EmpleadoBD.obtenerCantidadEmpleadosPorGenero(g)));
+        elif opcion==12:
+            d=Departamento(input("Ingrese Nro Departamento: "),input("Ingrese Nombre Departamento: "))
+            DepartamentoBD.agregarDepartamento(d)
+            print("Departamento Ingresado con exito")
+        elif opcion==13:
+            e=Empleado(0,ingresarFecha(),input("Ingrese Nombre: "),input("Ingrese Apellido: "),input("Ingrese Genero: "),ingresarFecha())
+            EmpleadoBD.agregarEmpleado(e)
+            print("Empleado Ingresado con exito")
+        elif opcion == 15:
             salir=True
             os._exit(1)
         else:
