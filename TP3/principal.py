@@ -3,6 +3,8 @@ from pandas.core.frame import DataFrame
 from CSV import CSV
 from Entidades.departamento import Departamento
 from Entidades.empleado import Empleado
+from conexionMongo import cantidadElementos
+from conexionMongo import crearBase
 from funciones import ingresarFecha
 from departamentodb import DepartamentoBD
 from empleadodb import EmpleadoBD
@@ -48,7 +50,11 @@ if __name__ == "__main__":
         print("10. Obtener datos completos de los departamentos")
         print("11. Cantidad de Empleados de un genero determinado")
         print("12. Insertar Departamentos")
-        print("15. Salir")
+        print("13. Insertar Empleados")
+        print("14. Borrar Empleado")
+        print("15. Crear en MongoDB una base de datos y una colección con el mismo nombre. Cargar los datos del archivo csv denominado weatherHistory.csv")
+        print("16. Mostrar cantidad de elementos cargados en la coleccion weatherHistory")
+        print("17. Salir")
         
     
         opcion = ingresarOpcion()
@@ -115,7 +121,17 @@ if __name__ == "__main__":
             e=Empleado(0,ingresarFecha(),input("Ingrese Nombre: "),input("Ingrese Apellido: "),input("Ingrese Genero: "),ingresarFecha())
             EmpleadoBD.agregarEmpleado(e)
             print("Empleado Ingresado con exito")
-        elif opcion == 15:
+        elif opcion==14:
+            cod=int(input("Ingrese codigo de Empleado a eliminar: "))
+            if(EmpleadoBD.borrarEmpleado(cod)==0):
+                print("El empleado ingresado, no se puede borrar, ya que no eexiste")
+            else:
+                print("Empleado Eliminado con exito")
+        elif opcion==15:
+            crearBase('weatherHistory','weatherHistory','./BASE DE DATOS/weatherHistory.csv')
+        elif opcion==16:
+            cantidadElementos('weatherHistory','weatherHistory')
+        elif opcion == 17:
             salir=True
             os._exit(1)
         else:
