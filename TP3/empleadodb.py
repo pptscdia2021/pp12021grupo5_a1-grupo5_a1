@@ -19,7 +19,7 @@ class EmpleadoBD:
         
                     # Recorrer e imprimir
                     for emp in employees:
-                        e=Empleado(emp[0],emp[1],emp[2],emp[3],emp[4],emp[5])
+                        e=Empleado(emp[0],emp[2],emp[3],emp[1],emp[4],emp[5])
                         empleados.append(e)
                     return empleados
             finally:
