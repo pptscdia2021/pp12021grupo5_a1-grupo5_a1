@@ -68,3 +68,25 @@ class EmpleadoBD:
         
         except (pymysql.err.OperationalError, pymysql.err.InternalError) as e:
             print("Ocurrió un error al conectar: ", e)
+
+    def borrarEmpleado(codEmp):
+        try:
+            conexion = Conexion.conectar()
+            try:
+                with conexion.cursor() as cursor:
+                    #sentencia="INSERT INTO employees ('emp_no','birth_date','first_name','last_name','gender','hire_date')) VALUES (%s,%s,%s,%s,%s,%s);"
+                    sentencia="DELETE FROM employees where  emp_no=%s;"
+                    valores=(codEmp)
+                    a=cursor.execute(sentencia,valores)
+        
+                    # Con fetchall traemos todas las filas
+                    #departamentos = cursor.fetchall()
+        
+                    conexion.commit()
+
+                    return a
+            finally:
+                conexion.close()
+        
+        except (pymysql.err.OperationalError, pymysql.err.InternalError) as e:
+            print("Ocurrió un error al conectar: ", e)
